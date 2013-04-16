@@ -6,4 +6,4 @@ En `bootstrap` hay archivos para:
 - Ubuntu 12.04
 - SmartOS 1.9.1
 
-En ambos casos se usa Ruby 1.9.1
+En ambos casos se usa Ruby 1.9.3
