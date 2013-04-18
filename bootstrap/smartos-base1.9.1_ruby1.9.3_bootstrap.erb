@@ -1,3 +1,6 @@
+# Tested against joyent's:
+# - base64 1.9.1
+# - percona 1.6.0
 cmd="bash"
 
 if [ "$UID" != "0" ]
@@ -9,12 +12,8 @@ cat <<TEMPLATE | $cmd
 
 set -e
 
-#
-# tested against joyent's base64 1.9.1
-#
-
 pkgin -fy up
-pkgin -y install ruby193 build-essential
+pkgin -y install ruby193 build-essential gmake
 gem update --system
 gem install chef -v <%= chef_version %> -N
 
