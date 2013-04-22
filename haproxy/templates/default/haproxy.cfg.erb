@@ -18,22 +18,27 @@ defaults
   timeout connect 5s
   timeout client 50s
   timeout server 50s
-  balance  <%= node['haproxy']['balance_algorithm'] %>
+  balance round-robin 
 
-# Set up application listeners here.
-
+# Custom rules definition
+# Frontend - WebServer
+#
 frontend http
   maxconn 4000
   bind 0.0.0.0:<%= node['haproxy']['incoming_port'] %>
-  default_backend servers-http
+  use_backend servers-http
 
 backend servers-http
-  server localhost 127.0.0.1:4000 weight 1 maxconn <%= node['haproxy']['member_max_connections'] %> check
-  server localhost 127.0.0.1:4001 weight 1 maxconn <%= node['haproxy']['member_max_connections'] %> check
+  server testweb01 10.1.0.105:80 weight 1 maxconn <%= node['haproxy']['member_max_connections'] %> check
+  server testweb02 10.1.0.106:80 weight 1 maxconn <%= node['haproxy']['member_max_connections'] %> check
 
+# Admin site with password.
+# Keep it secret! :)
+#
 listen admin
-  bind *:22800
+  bind *:22800 
 	stats enable
+  stats auth betazeta:b3t4z3t4.,
 
 <% if node['haproxy']['enable_admin'] -%>
 listen admin <%= node['haproxy']['admin']['address_bind'] %>:<%= node['haproxy']['admin']['port'] %>
