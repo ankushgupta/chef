@@ -36,3 +36,7 @@ bash "install npm - package manager for node" do
   not_if "#{node['nodejs']['dir']}/bin/npm -v 2>&1 | grep '#{node['nodejs']['npm']}'"
 end
 
+bash "install npm package forever" do
+	user "root"
+	code "npm install -g forever"
+end
